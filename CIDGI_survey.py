@@ -539,18 +539,18 @@ if 'selected_info' not in st.session_state:
 with st.sidebar:
 
     st.image('CPASI_logo.png', use_column_width=True)  # Add your logo path here
-    st.markdown('<div class="main-title">Confidence in Democratic Governance Index – Wave 06</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">Democracy & Reconciliation in Sri Lanka</div>', unsafe_allow_html=True)
     selected_theme = st.radio("Select Color Theme", ["Theme 1", "Theme 2"], index=0, key="theme_radio_sidebar")
     selected_info = st.radio("Select Information", ["Show Charts", "Show Introductory Text", "Show Methodology Text"], key="info_radio_sidebar")
             # Add the button to the sidebar
 
-if st.button("Full Report"):
-    st.experimental_set_query_params(page="Democracy_Reconciliation_detailSheet.py")
-    st.experimental_rerun()
+    if st.button("Full Report"):
+        st.experimental_set_query_params(page="Democracy_Reconciliation_detailSheet.py")
+        st.experimental_rerun()
+    if st.button("Home"):
+        st.experimental_set_query_params(page="Home.py")
+        st.experimental_rerun()
 
-if st.button("Home"):
-    st.experimental_set_query_params(page="Home.py")
-    st.experimental_rerun()
 
 
 
