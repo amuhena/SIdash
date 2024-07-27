@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 import base64
 from io import BytesIO
-import folium
+
 from streamlit_folium import folium_static
 import plotly.io as pio
 import simplekml
