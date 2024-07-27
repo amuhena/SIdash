@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import base64
 from io import BytesIO
 
-from streamlit_folium import folium_static
+
 import plotly.io as pio
 import simplekml
 import base64
