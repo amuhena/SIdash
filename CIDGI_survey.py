@@ -7,8 +7,8 @@ from io import BytesIO
 
 
 import plotly.io as pio
-import simplekml
-import base64
+
+
 
 st.set_page_config(layout='wide')
 
