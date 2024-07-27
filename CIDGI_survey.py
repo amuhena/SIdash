@@ -470,7 +470,7 @@ if 'page' not in st.session_state:
 # Sidebar navigation
 with st.sidebar:
     st.image('CPASI_logo.png', use_column_width=True)  # Add your logo path here
-    st.markdown('<div class="main-title">Democracy & Reconciliation in Sri Lanka</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">CONFIDENCE IN DEMOCRATIC GOVERNANCE INDEX – WAVE 6</div>', unsafe_allow_html=True)
     
     selected_theme = st.radio("Select Color Theme", ["Theme 1", "Theme 2"], index=0, key="theme_radio_sidebar")
     selected_info = st.radio("Select Information", ["Show Charts", "Show Introductory Text", "Show Methodology Text"], key="info_radio_sidebar")
