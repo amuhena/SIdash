@@ -737,7 +737,7 @@ def full_report():
                 x=0.5
             ),
             margin=dict(l=40, r=40, t=80, b=160),  # Adjust margins to make space for annotations
-            height=600,  # Adjust the height of the chart
+            height=450,  # Adjust the height of the chart
             width=800  # Adjust the width of the chart
         )
         return pie_fig
