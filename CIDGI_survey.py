@@ -544,12 +544,13 @@ with st.sidebar:
     selected_info = st.radio("Select Information", ["Show Charts", "Show Introductory Text", "Show Methodology Text"], key="info_radio_sidebar")
             # Add the button to the sidebar
 
-    if st.button("Full Report"):
-        st.experimental_set_query_params(page="Democracy_Reconciliation_detailSheet.py")
-        st.experimental_rerun()
-    if st.button("Home"):
-        st.experimental_set_query_params(page="Home.py")
-        st.experimental_rerun()
+if st.button("Full Report"):
+    st.experimental_set_query_params(page="Democracy_Reconciliation_detailSheet.py")
+    st.experimental_rerun()
+
+if st.button("Home"):
+    st.experimental_set_query_params(page="Home.py")
+    st.experimental_rerun()
 
 
 
