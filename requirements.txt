@@ -1,0 +1,8 @@
+streamlit
+plotly
+graph_objects
+pandas
+numpy
+base64
+streamlit_folium
+io

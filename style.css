@@ -1,0 +1,60 @@
+/* Custom styles for the Streamlit app */
+
+body {
+    overflow: hidden;
+    height: 100vh;
+}
+
+main .block-container {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+
+.main .block-container {
+    max-width:1400px;  /* Adjust the max-width as needed */
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 15px;
+}
+
+.centered-subheader {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 1200;
+}
+
+.main-title {
+    color: #0097B2;  /* Use the provided color */
+    font-size: 30px;  /* Adjust font size as needed */
+    font-weight: 800;  /* Adjust font weight as needed */
+    text-align: center;
+    margin-bottom: 2rem;  /* Add margin to create space below the title */
+}
+
+.stSidebar {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.stSidebar .element-container:nth-child(1) img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+div.st-emotion-cache-12w0qpk{
+    background-color: #f0f5f5;
+    border:1px solid #e0ebeb;
+    padding: 10px 10px 10px 10px;
+    border-radius: 15px;
+}
+
+div.row-widget{
+
+    background-color: #f0f5f5;
+    border:1px solid #e0ebeb;
+    padding: 10px 5px 10px 5px;
+    border-radius: 15px;
+}
