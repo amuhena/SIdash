@@ -19,6 +19,10 @@ st.markdown(
     .stRadio > div {
         flex-direction: row;
     }
+    .main-title {
+        text-align: center;
+        font-size: 24px; /* Change this value to your desired font size */
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -450,62 +454,62 @@ survey_data = {
 
 # Define the dictionary for custom questions
 custom_questions = {
-    'Ensure anti-corruption measures': "How important are anti-corruption measures?",
-    'Ensure post-war reconciliation and transitional justice': "How important is post-war reconciliation and transitional justice?",
-    'Uphold the democratic rights of the people': "How important is upholding the democratic rights of the people?",
-    'Addressing Unemployment': "How important is addressing unemployment?",
-    'Preserving law and order in the country': "How important is preserving law and order in the country?",
-    'Hold those who are responsible for economic crisis accountable': "How important is holding those responsible for the economic crisis accountable?",
-    'Bring justice to the victims of the Easter Attack': "How important is bringing justice to the victims of the Easter Attack?",
-    'Address the problems of minority communities': "How important is addressing the problems of minority communities?",
-    'Will negotiate with the IMF for a better deal to resolve the economic crisis': "How important is negotiating with the IMF for a better deal to resolve the economic crisis?",
-    'Resolve the country’s Economic crisis': "How important is resolving the country's economic crisis?",
-    'Finding alternative approaches to economic recovery': "How important is finding alternative approaches to economic recovery?"
+    'Ensure anti-corruption measures': "Ensure anti-corruption measures",
+    'Ensure post-war reconciliation and transitional justice': "Ensure post-war reconciliation and transitional justice",
+    'Uphold the democratic rights of the people': "Uphold the democratic rights of the people",
+    'Addressing Unemployment': "Addressing Unemployment",
+    'Preserving law and order in the country': "Preserving law and order in the country",
+    'Hold those who are responsible for economic crisis accountable': "Hold those who are responsible for economic crisis accountable",
+    'Bring justice to the victims of the Easter Attack': "Bring justice to the victims of the Easter Attack",
+    'Address the problems of minority communities': "Address the problems of minority communities",
+    'Will negotiate with the IMF for a better deal to resolve the economic crisis': "Will negotiate with the IMF for a better deal to resolve the economic crisis",
+    'Resolve the country’s Economic crisis': "Resolve the country’s Economic crisis",
+    'Finding alternative approaches to economic recovery': "Finding alternative approaches to economic recovery"
 }
 
 # Initialize session state if not already done
 if 'page' not in st.session_state:
     st.session_state.page = "home"
 
+# Top header with two logos and title
+col1, col2, col3 = st.columns([1, 12 , 1])
+with col1:
+    st.image('CPASI_logo.jpg', use_column_width=True)  # Add your left logo path here
+with col2:
+    st.markdown('<div class="main-title">CONFIDENCE IN DEMOCRATIC GOVERNANCE INDEX – WAVE 6</div>', unsafe_allow_html=True)
+with col3:
+    st.image('CPASI_logo2.jpg', use_column_width=True)  # Add your right logo path here
+
 # Sidebar navigation
 with st.sidebar:
-    st.image('CPASI_logo.png', use_column_width=True)  # Add your logo path here
-    st.markdown('<div class="main-title">CONFIDENCE IN DEMOCRATIC GOVERNANCE INDEX – WAVE 6</div>', unsafe_allow_html=True)
-    
-    selected_theme = st.radio("Select Color Theme", ["Theme 1", "Theme 2"], index=0, key="theme_radio_sidebar")
-    selected_info = st.radio("Select Information", ["Show Charts", "Show Introductory Text", "Show Methodology Text"], key="info_radio_sidebar")
+    selected_heading = st.radio("Select Section", list(survey_data.keys()), key="main_heading_radio")
     
     if st.button("Home"):
         st.session_state.page = "home"
-    if st.button("Full Report"):
-        st.session_state.page = "full_report"
+    #if st.button("Full Report"):
+     #   st.session_state.page = "full_report"
     
-    st.markdown("[View full report](https://www.cpalanka.org/topline-report-democracy-reconciliation-in-sri-lanka/)")
+   # st.markdown("[View full report](https://www.cpalanka.org/topline-report-democracy-reconciliation-in-sri-lanka/)")
 
 # Function to render the home page
 def home():
+    st.markdown('<div style="display: flex; justify-content: space-between;">', unsafe_allow_html=True)
     col1, col2 = st.columns([1, 1])
-
     with col1:
-        selected_heading = st.selectbox("Select Section", list(survey_data.keys()), key="main_heading_dropdown")
-
+        # Display the questionnaire text in column 01
+        question_text = custom_questions.get(selected_heading, f"Question: {selected_heading}")
+        st.markdown(f"<h4 style='color: #8C3703;'>{question_text}</h4>", unsafe_allow_html=True)
     with col2:
-        selected_graph = st.radio(
-            "Filter", ["Ethnicity", "Sex", "Age", "Locality"],
-            key="right_radio"
-        )
+        selected_graph = st.radio("Filter", ["Ethnicity", "Sex", "Age", "Locality"], key="right_radio_top")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([1, 1])
 
     chart_title_placeholder = st.empty()
     content_placeholder = st.empty()
 
     if 'selected_theme' not in st.session_state:
         st.session_state.selected_theme = "Theme 1"
-
-    if 'selected_info' not in st.session_state:
-        st.session_state.selected_info = "Show Charts"
-
-    st.session_state.selected_theme = selected_theme
-    st.session_state.selected_info = selected_info
 
     color_mapping = get_color_theme(st.session_state.selected_theme)
 
@@ -599,48 +603,26 @@ def home():
         )
         return pie_fig
 
-    question_text = custom_questions.get(selected_heading, f"Question: {selected_heading}")
-    st.markdown(f"<h4 style='text-align: center; color: #8C3703;'>{question_text}</h4>", unsafe_allow_html=True)
+    chart_col1, chart_col2 = st.columns([1, 1])
 
-    if st.session_state.selected_info == "Show Charts":
-        chart_col1, chart_col2 = st.columns([1, 1])
+    with chart_col1:
+        data = survey_data[selected_heading]
+        pie_chart = create_pie_chart(data['national'], data['national_values'], f"{selected_heading} - National Level")
+        st.plotly_chart(pie_chart)
 
-        with chart_col1:
-            data = survey_data[selected_heading]
-            pie_chart = create_pie_chart(data['national'], data['national_values'], f"{selected_heading} - National Level")
-            st.plotly_chart(pie_chart)
-
-        with chart_col2:
-            if selected_graph == "Ethnicity":
-                bar_chart = create_horizontal_clustered_bar_chart(data['ethnicity'], data['ethnicity_values'], f"{selected_heading} by Ethnicity")
-            elif selected_graph == "Sex":
-                bar_chart = create_horizontal_clustered_bar_chart(data['sex'], data['sex_values'], f"{selected_heading} by Sex")
-            elif selected_graph == "Age":
-                bar_chart = create_horizontal_clustered_bar_chart(data['age'], data['age_values'], f"{selected_heading} by Age")
-            elif selected_graph == "Locality":
-                bar_chart = create_horizontal_clustered_bar_chart(data['locality'], data['locality_values'], f"{selected_heading} by Locality")
-            else:
-                bar_chart = None
-            if bar_chart:
-                st.plotly_chart(bar_chart)
-
-    elif st.session_state.selected_info == "Show Introductory Text":
-        with content_placeholder.container():
-            st.markdown("<h2 style='text-align: center; color: #8C3703;'>Introduction</h2>", unsafe_allow_html=True)
-            intro_text = """
-            This brief report aims to share some of the selected key findings of the latest survey on democracy and reconciliation conducted by Social Indicator, the survey arm of the Centre for Policy Alternatives. The poll was designed to capture the current public opinion on matters related to themes of democracy and reconciliation in Sri Lanka. The survey findings on support for democracy, trust in democratic institutions, public assessment of the progress of reconciliation, and attitude toward constitutional reforms are discussed in this brief report.
-
-            A total of 1350 individuals belonging to the four main ethnic communities - Sinhala, Tamil, Malaiyaha Tamil, and Muslim - across 25 districts participated in this survey. A semi-structured questionnaire was administered amongst the respondents who were chosen using a multi-stage stratified random sampling technique. The fieldwork was conducted between 4th and 22nd of January 2024 employing 73 field enumerators (male and female) who belong to the four main ethnic communities. Upon completion of the data collection process, the data set was weighted to reflect the actual district and ethnic proportion of the population. The data set was analysed using the Statistical Package for Social Sciences (SPSS).
-            """
-            st.markdown(intro_text)
-
-    elif st.session_state.selected_info == "Show Methodology Text":
-        with content_placeholder.container():
-            st.markdown("<h2 style='text-align: center; color: #8C3703;'>Methodology</h2>", unsafe_allow_html=True)
-            methodology_text = """
-            The survey was carried out through face-to-face interviews utilizing a semi-structured questionnaire amongst a sample of 1350 individuals selected from the four main ethnic communities - Sinhala, Tamil, Malaiyaha Tamil, and Muslim - across 25 districts. The sample locations are selected using a multi-stage stratified random sampling technique to ensure fair representation of men and women residing in both rural and urban localities. The fieldwork was conducted between the 4th and 22nd of January 2024 employing 73 field enumerators (male and female) who belong to the four main ethnic communities. The final data set was weighted to reflect the actual district and ethnic proportion of the population and was analysed using the Statistical Package for Social Sciences (SPSS).
-            """
-            st.markdown(methodology_text)
+    with chart_col2:
+        if selected_graph == "Ethnicity":
+            bar_chart = create_horizontal_clustered_bar_chart(data['ethnicity'], data['ethnicity_values'], f"{selected_heading} by Ethnicity")
+        elif selected_graph == "Sex":
+            bar_chart = create_horizontal_clustered_bar_chart(data['sex'], data['sex_values'], f"{selected_heading} by Sex")
+        elif selected_graph == "Age":
+            bar_chart = create_horizontal_clustered_bar_chart(data['age'], data['age_values'], f"{selected_heading} by Age")
+        elif selected_graph == "Locality":
+            bar_chart = create_horizontal_clustered_bar_chart(data['locality'], data['locality_values'], f"{selected_heading} by Locality")
+        else:
+            bar_chart = None
+        if bar_chart:
+            st.plotly_chart(bar_chart)
 
 # Function to render the full report page
 def full_report():
